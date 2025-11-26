@@ -1,0 +1,44 @@
+name: CI - Integração Contínua
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint (se existir)
+        run: |
+          if [ -f "eslint.config.js" ] || [ -f ".eslintrc.js" ] || [ -f ".eslintrc.json" ]; then
+            echo "ESLint encontrado. Rodando lint..."
+            npm run lint
+          else
+            echo "Nenhuma configuração do ESLint encontrada. Pulando etapa."
+          fi
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
