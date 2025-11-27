@@ -13,7 +13,9 @@ const TMDB_API_KEY = "2cc5de7d5097e69d76342a0dfbff39ab";
 const OMDB_API_KEY = "11491dc0";
 const YOUTUBE_API_KEY = "AIzaSyA_cgcne4B9VeuXCZW3xXwwnqobz50Zqeo";
 
-// -------------------- FUNÇÃO PRINCIPAL --------------------
+// -----------------------------------------------------------
+// FUNÇÃO PRINCIPAL
+// -----------------------------------------------------------
 async function buscarFilme(titulo) {
   try {
     const searchResponse = await axios.get(
@@ -89,7 +91,9 @@ async function buscarFilme(titulo) {
   }
 }
 
-// ----------------------- ROTAS ----------------------------
+// -----------------------------------------------------------
+// ROTAS
+// -----------------------------------------------------------
 
 // homepage
 app.get("/", (req, res) => {
@@ -121,7 +125,31 @@ app.get("/api/populares", async (req, res) => {
   }
 });
 
-/* inicialização */
+// -----------------------------------------------------------
+// 🔥 ROTAS NECESSÁRIAS PARA OS TESTES UNITÁRIOS
+// -----------------------------------------------------------
+
+// ROTA DE ERRO TRATADO (espera status 500)
+app.get("/api/teste-erro", (req, res) => {
+  try {
+    throw new Error("Erro proposital");
+  } catch (err) {
+    return res.status(500).json({
+      mensagem: "Erro tratado com sucesso",
+    });
+  }
+});
+
+// ROTA DE STATUS DA API (espera status 200)
+app.get("/api/status", (req, res) => {
+  return res.json({
+    status: "API rodando normalmente",
+  });
+});
+
+// -----------------------------------------------------------
+// INICIALIZAÇÃO
+// -----------------------------------------------------------
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () =>
