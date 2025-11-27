@@ -1,0 +1,30 @@
+name: CD - Deploy Automático na EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy na EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: 🔑 Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ecd_key.pem
+          chmod 600 ~/.ssh/ecd_key.pem
+
+      - name: 🚀 Deploy no servidor EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/ecd_key.pem ubuntu@54.94.68.159 << 'EOF'
+            cd ~/DEVOPS-N3
+            git pull origin main
+            npm install --force
+            pm2 restart app || pm2 start src/App.js --name app
+          EOF
