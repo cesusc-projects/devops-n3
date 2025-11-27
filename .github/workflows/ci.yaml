@@ -3,7 +3,7 @@ name: CI - Integração Contínua
 on:
   pull_request:
     branches:
-      - develop
+      - Develop
 
   push:
     branches:
