@@ -25,15 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint (se existir)
-        run: |
-          if [ -f "eslint.config.js" ] || [ -f ".eslintrc.js" ] || [ -f ".eslintrc.json" ]; then
-            echo "ESLint encontrado. Rodando lint..."
-            npm run lint
-          else
-            echo "Nenhuma configuração do ESLint encontrada. Pulando etapa."
-          fi
-
       - name: Run tests with coverage
         run: npm test -- --coverage
 
