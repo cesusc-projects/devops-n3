@@ -153,7 +153,7 @@ app.get("/api/status", (req, res) => {
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () =>
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`)
+    console.log(`🚀 Servidor rodando em http://54.94.68.159:${PORT}`)
   );
 }
 

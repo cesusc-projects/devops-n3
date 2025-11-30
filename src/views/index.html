@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENTREGA N3-DEVOPS</title>
+    <title>UNICESUFlix - Catálogo de Filmes</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <!-- NAVBAR -->
     <header class="navbar">
-        <h1 class="logo">UNICESUFlix</h1>
+        <h1 class="logo" onclick="voltarParaHome()">UNICESUFlix</h1>
 
-        <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Buscar filmes..."
-            onkeydown="if(event.key === 'Enter') buscarFilme()"
-        />
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Buscar filmes..."
+                onkeydown="if(event.key === 'Enter') buscarFilme()"
+            />
+            <button class="search-btn" onclick="buscarFilme()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </header>
 
     <!-- HERO PRINCIPAL -->
@@ -26,6 +32,26 @@
         <div class="hero-content">
             <h2>Bem-vindo ao UNICESUFlix</h2>
             <p>Seu catálogo inteligente feito pelo Grupo: Luiz Felipe C.Gomes, Pedro Nicoletti e Camila Pereira</p>
+            <button class="cta-btn" onclick="rolarParaCarrosseis()">Explorar Catálogo</button>
+        </div>
+    </section>
+
+    <!-- TRAILER AUTOMÁTICO -->
+    <section class="trailer-section" id="trailerAutomatico">
+        <video class="trailer-video" id="trailerVideo" muted autoplay loop>
+            <!-- O vídeo será carregado dinamicamente -->
+        </video>
+        <div class="trailer-overlay">
+            <h3 class="trailer-title" id="trailerTitulo"></h3>
+            <p class="trailer-description" id="trailerDescricao"></p>
+            <div class="trailer-buttons">
+                <button class="trailer-btn play" onclick="abrirTrailerModal()">
+                    <i class="fas fa-play"></i> Assistir Trailer
+                </button>
+                <button class="trailer-btn info" onclick="buscarFilmeTrailer()">
+                    <i class="fas fa-info-circle"></i> Mais Informações
+                </button>
+            </div>
         </div>
     </section>
 
@@ -33,14 +59,84 @@
     <section id="resultadoBusca" class="resultado"></section>
 
     <!-- LISTAS CARROSSEL -->
-    <h2 class="categoria-titulo">🔥 Populares</h2>
-    <section id="carrosselPopulares" class="carrossel"></section>
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-fire"></i> 🔥 Populares</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselPopulares', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselPopulares" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselPopulares', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
 
-    <h2 class="categoria-titulo">⭐ Mais bem avaliados</h2>
-    <section id="carrosselAvaliados" class="carrossel"></section>
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-star"></i> ⭐ Mais bem avaliados</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselAvaliados', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselAvaliados" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselAvaliados', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
 
-    <h2 class="categoria-titulo">🎬 Lançamentos</h2>
-    <section id="carrosselLancamentos" class="carrossel"></section>
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-film"></i> 🎬 Lançamentos</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselLancamentos', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselLancamentos" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselLancamentos', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- NOVOS CARROSSEIS ADICIONADOS -->
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-theater-masks"></i> 🎭 Drama</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselDrama', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselDrama" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselDrama', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-laugh"></i> 😄 Comédia</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselComedia', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselComedia" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselComedia', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="categoria-container">
+        <h2 class="categoria-titulo"><i class="fas fa-bolt"></i> 💥 Ação</h2>
+        <div class="carrossel-container">
+            <button class="carrossel-btn prev" onclick="rolarCarrossel('carrosselAcao', -300)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <section id="carrosselAcao" class="carrossel"></section>
+            <button class="carrossel-btn next" onclick="rolarCarrossel('carrosselAcao', 300)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- MODAL DO TRAILER -->
     <div id="trailerModal" class="modal" onclick="fecharModal(event)">
@@ -50,9 +146,70 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>UNICESUFlix</h2>
+                <p>Seu catálogo inteligente de filmes</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Navegação</h3>
+                    <a href="#" onclick="voltarParaHome()">Início</a>
+                    <a href="#">Filmes</a>
+                    <a href="#">Séries</a>
+                    <a href="#">Minha Lista</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <a href="#">Central de Ajuda</a>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Contato</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Desenvolvedores</h3>
+                    <p>Luiz Felipe C. Gomes</p>
+                    <p>Pedro Nicoletti</p>
+                    <p>Camila Pereira</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 UNICESUFlix. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
     <script>
         // ✅ CORRIGIDO: Use o IP da EC2 em vez de localhost
         const API_BASE = "http://54.94.68.159:3000/api";
+        const API_KEY_TMDB = "2cc5de7d5097e69d76342a0dfbff39ab";
+        
+        // Variáveis para controle do trailer automático
+        let trailerAtualIndex = 0;
+        let filmesComTrailer = [];
+        let intervaloTrailer;
+        let filmeTrailerAtual = null;
+
+        // -------------------------------
+        // 🏠 VOLTAR PARA HOME
+        // -------------------------------
+        function voltarParaHome() {
+            document.getElementById("resultadoBusca").style.display = "none";
+            document.getElementById("resultadoBusca").innerHTML = "";
+            document.getElementById("searchInput").value = "";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // -------------------------------
+        // 📜 ROLAR PARA CARROSSEIS
+        // -------------------------------
+        function rolarParaCarrosseis() {
+            document.querySelector('.categoria-container').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
 
         // -------------------------------
         // 🔍 BUSCA DINÂMICA - CORRIGIDA
@@ -83,7 +240,7 @@
                         <p><strong>Lançamento:</strong> ${data.lancamento || 'N/A'}</p>
                         <p><strong>Sinopse:</strong> ${data.sinopse || 'Sinopse não disponível.'}</p>
 
-                        ${data.poster ? `<img src="${data.poster}" alt="${data.titulo}" style="max-width: 300px; margin: 1rem 0; border-radius: 8px;">` : ''}
+                        ${data.poster ? `<img src="${data.poster}" alt="${data.titulo}" class="poster-detalhe">` : ''}
 
                         <div class="notas">
                             <h3>Avaliações:</h3>
@@ -101,6 +258,9 @@
                     </div>
                 `;
 
+                document.getElementById("resultadoBusca").style.display = "block";
+                window.scrollTo({ top: document.getElementById("resultadoBusca").offsetTop - 100, behavior: 'smooth' });
+
             } catch (error) {
                 console.error("❌ Erro na busca:", error);
                 document.getElementById("resultadoBusca").innerHTML = `
@@ -110,6 +270,7 @@
                         <p>Tente novamente com outro título.</p>
                     </div>
                 `;
+                document.getElementById("resultadoBusca").style.display = "block";
             }
         }
 
@@ -137,6 +298,104 @@
         }
 
         // -------------------------------
+        // 🎬 TRAILER AUTOMÁTICO
+        // -------------------------------
+        async function iniciarTrailerAutomatico() {
+            // Buscar filmes populares para o trailer automático
+            try {
+                const res = await fetch(`${API_BASE}/populares`);
+                
+                if (!res.ok) {
+                    throw new Error(`Erro ao carregar populares: ${res.status}`);
+                }
+                
+                const filmes = await res.json();
+                console.log("✅ Filmes populares para trailer:", filmes);
+                
+                // Usar os filmes populares para o trailer automático
+                filmesComTrailer = filmes.slice(0, 5); // Usar os 5 primeiros
+                
+                if (filmesComTrailer.length > 0) {
+                    // Iniciar com o primeiro filme
+                    await trocarTrailerAutomatico();
+                    
+                    // Configurar intervalo para trocar o trailer a cada 30 segundos
+                    intervaloTrailer = setInterval(trocarTrailerAutomatico, 30000);
+                }
+            } catch (error) {
+                console.error("❌ Erro ao carregar trailers automáticos:", error);
+                // Fallback para TMDB
+                carregarTrailersFallback();
+            }
+        }
+
+        async function trocarTrailerAutomatico() {
+            if (filmesComTrailer.length === 0) return;
+            
+            // Avançar para o próximo trailer (circular)
+            trailerAtualIndex = (trailerAtualIndex + 1) % filmesComTrailer.length;
+            const filme = filmesComTrailer[trailerAtualIndex];
+            
+            // Buscar informações completas do filme
+            try {
+                const res = await fetch(`${API_BASE}/filmes/${encodeURIComponent(filme.title)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    filmeTrailerAtual = data;
+                    
+                    // Atualizar informações na seção de trailer
+                    document.getElementById("trailerTitulo").textContent = data.titulo || filme.title;
+                    document.getElementById("trailerDescricao").textContent = data.sinopse || filme.overview || "Descrição não disponível.";
+                    
+                    // Aqui você poderia usar o trailer real da API se disponível
+                    // Por enquanto, usaremos um placeholder
+                    const video = document.getElementById("trailerVideo");
+                    video.src = "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"; // Placeholder
+                }
+            } catch (error) {
+                console.error("Erro ao buscar detalhes do filme:", error);
+                // Usar dados básicos do TMDB
+                document.getElementById("trailerTitulo").textContent = filme.title;
+                document.getElementById("trailerDescricao").textContent = filme.overview || "Descrição não disponível.";
+            }
+        }
+
+        async function carregarTrailersFallback() {
+            // Fallback para TMDB caso a API não esteja disponível
+            const url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY_TMDB}&language=pt-BR`;
+            
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                filmesComTrailer = data.results.slice(0, 5);
+                
+                if (filmesComTrailer.length > 0) {
+                    await trocarTrailerAutomatico();
+                    intervaloTrailer = setInterval(trocarTrailerAutomatico, 30000);
+                }
+            } catch (error) {
+                console.error("Erro no fallback de trailers:", error);
+            }
+        }
+
+        function abrirTrailerModal() {
+            if (!filmeTrailerAtual || !filmeTrailerAtual.trailer) {
+                alert("Trailer não disponível para este filme.");
+                return;
+            }
+            
+            abrirTrailer(filmeTrailerAtual.trailer);
+        }
+
+        function buscarFilmeTrailer() {
+            if (!filmeTrailerAtual) return;
+            
+            document.getElementById("searchInput").value = filmeTrailerAtual.titulo || filmesComTrailer[trailerAtualIndex].title;
+            buscarFilme();
+        }
+
+        // -------------------------------
         // 🎞️ FILMES POPULARES DA SUA API
         // -------------------------------
         async function carregarFilmesPopulares() {
@@ -157,7 +416,12 @@
                     .map(filme => `
                         <div class="card" onclick="buscarCard('${filme.title.replace(/'/g, "\\'")}')">
                             <img src="https://image.tmdb.org/t/p/w500${filme.poster_path}" alt="${filme.title}" onerror="this.src='https://via.placeholder.com/500x750/333/fff?text=Imagem+Não+Disponível'">
-                            <span>${filme.title}</span>
+                            <div class="card-info">
+                                <h3 class="card-title">${filme.title}</h3>
+                                <div class="card-rating">
+                                    <i class="fas fa-star"></i> ${filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A'}
+                                </div>
+                            </div>
                         </div>
                     `)
                     .join("");
@@ -175,9 +439,13 @@
         // -------------------------------
         // 📌 CARROSSEIS TMDB (FALLBACK)
         // -------------------------------
-        async function carregarCarrosselFallback(endpoint, containerId, titulo) {
+        async function carregarCarrosselFallback(endpoint, containerId, titulo, genero = null) {
             try {
-                const url = `https://api.themoviedb.org/3${endpoint}?api_key=2cc5de7d5097e69d76342a0dfbff39ab&language=pt-BR`;
+                let url = `https://api.themoviedb.org/3${endpoint}?api_key=${API_KEY_TMDB}&language=pt-BR`;
+                
+                if (genero) {
+                    url += `&with_genres=${genero}`;
+                }
 
                 const res = await fetch(url);
                 const data = await res.json();
@@ -188,7 +456,12 @@
                     .map(filme => `
                         <div class="card" onclick="buscarCard('${filme.title.replace(/'/g, "\\'")}')">
                             <img src="https://image.tmdb.org/t/p/w500${filme.poster_path}" alt="${filme.title}" onerror="this.src='https://via.placeholder.com/500x750/333/fff?text=Imagem+Não+Disponível'">
-                            <span>${filme.title}</span>
+                            <div class="card-info">
+                                <h3 class="card-title">${filme.title}</h3>
+                                <div class="card-rating">
+                                    <i class="fas fa-star"></i> ${filme.vote_average.toFixed(1)}
+                                </div>
+                            </div>
                         </div>
                     `)
                     .join("");
@@ -203,19 +476,41 @@
         }
 
         // -------------------------------
+        // 🔄 ROLAGEM DO CARROSSEL
+        // -------------------------------
+        function rolarCarrossel(containerId, distancia) {
+            const container = document.getElementById(containerId);
+            container.scrollBy({
+                left: distancia,
+                behavior: 'smooth'
+            });
+        }
+
+        // -------------------------------
         // 🎯 BUSCA POR CLIQUE NO CARD
         // -------------------------------
         async function buscarCard(titulo) {
             document.getElementById("searchInput").value = titulo;
             await buscarFilme();
-            window.scrollTo({ top: document.getElementById("resultadoBusca").offsetTop - 100, behavior: 'smooth' });
         }
+
+        // -------------------------------
+        // 📜 NAVBAR SCROLL EFFECT
+        // -------------------------------
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
 
         // -------------------------------
         // 🚀 INICIALIZAÇÃO
         // -------------------------------
         async function inicializar() {
-            console.log("🚀 Inicializando CESUFlix...");
+            console.log("🚀 Inicializando UNICESUFlix...");
             
             // Testar conexão com a API
             try {
@@ -227,12 +522,18 @@
                 alert("⚠️ A API não está respondendo. Verifique se o servidor está online.");
             }
 
+            // Iniciar trailer automático
+            await iniciarTrailerAutomatico();
+            
             // Carregar filmes populares da SUA API
             await carregarFilmesPopulares();
             
             // Carregar outros carrosséis como fallback
             carregarCarrosselFallback("/movie/top_rated", "carrosselAvaliados", "filmes bem avaliados");
             carregarCarrosselFallback("/movie/upcoming", "carrosselLancamentos", "lançamentos");
+            carregarCarrosselFallback("/discover/movie", "carrosselDrama", "Drama", 18);
+            carregarCarrosselFallback("/discover/movie", "carrosselComedia", "Comédia", 35);
+            carregarCarrosselFallback("/discover/movie", "carrosselAcao", "Ação", 28);
         }
 
         // Iniciar quando a página carregar
